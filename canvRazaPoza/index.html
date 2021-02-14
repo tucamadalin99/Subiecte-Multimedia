@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+    <img id="imagine" src="toamna.jpg" width="200" height="300">
+    <canvas id="canvas" width="600" height="400">
+    </canvas>
+    <script>
+        
+            window.addEventListener("load", () => {
+                let canvas = document.getElementById("canvas");
+                let image = document.getElementById("imagine");
+                let context = canvas.getContext("2d");
+                let rect = canvas.getBoundingClientRect();
+                let originalImgData;
+                let imageData;
+
+                canvas.width = image.naturalWidth;
+                canvas.height = image.naturalHeight;
+
+                context.drawImage(image, 0, 0);
+                imageData = context.getImageData(0,0,canvas.width,canvas.height);
+                 originalImgData = context.getImageData(0, 0, canvas.width, canvas.height);
+                let pixels = imageData.data;
+                for(let i = 0; i < pixels.length; i+=4){
+                    let avg = (pixels[i] + pixels[i + 1] + pixels[i + 2])/3;
+                    pixels[i] = avg;
+                    pixels[i + 1] = avg;
+                    pixels[i + 2] = avg;
+                }
+                context.putImageData(imageData, 0, 0);
+
+                canvas.addEventListener("click", function (event) {
+                    let x = event.clientX - rect.left;
+                    let y = event.clientY - rect.top;
+
+                    context.beginPath();
+                    context.arc(x,y, 30, 0, Math.PI * 2);
+                   
+                    let dataArray = imageData.data;
+
+                    for (let i = y - 30; i < y + 30; i++)
+                        for (let j = x - 30; j < x + 30; j++) {
+                            let offset = (i * canvas.width + j) * 4;
+                            dataArray[offset] = originalImgData.data[offset];
+                            dataArray[offset + 1] = originalImgData.data[offset + 1];
+                            dataArray[offset + 2] = originalImgData.data[offset + 2];
+
+                        }
+
+
+                    context.putImageData(imageData, 0, 0);
+                    context.stroke();
+
+                })
+            })
+        </script>
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!--Scrieți o aplicatie HTML5 si si codul javascript care deseneaza 5 figuri geometrice  si apoi schimba transparenta pentru primle 50 linii intr-un canvas raster.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #canvas {
+            border: 5px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <script>
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+        var W = canvas.clientWidth;
+        var H = canvas.clientHeight;
+
+
+        function desenare() {
+            context.fillStyle = "red";
+            context.fillRect(0, 0, 50, 50);
+            context.fillRect(150, 0, 50, 50);
+            context.fillRect(400, 30, 30, 30);
+
+            context.beginPath();
+            context.fillStyle = "green";
+            context.arc(100, 100, 50, 0, Math.PI * 2);
+            context.fill();
+            context.beginPath();
+            context.fillStyle = "blue";
+            context.arc(300, 50, 50, 0, Math.PI * 2);
+            context.fill();
+
+
+
+
+        }
+
+
+        function transparenta() {
+            var imageData = context.getImageData(0, 0, W, H);
+            var data = imageData.data;
+            for (var y = 0; y < H; y++) {
+                for (var x = 0; x < W; x++) {
+                    var i = (y * W * 4) + x * 4;
+                    if (y < 50) {
+                        data[i + 3] = data[i + 3] / 2;
+                    }
+
+
+                }
+            }
+            context.putImageData(imageData, 0, 0);
+        }
+
+
+        //var timer=window.setInterval(transparenta,200);
+
+        desenare();
+        transparenta();
+    </script>
+</body>
+
+</html>

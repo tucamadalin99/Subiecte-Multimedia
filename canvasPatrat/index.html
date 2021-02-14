@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <button id="btn">Incepe animatia</button>
+        <canvas id="canvas" width="400" height="300" style="border: 1px solid black">
+
+        </canvas>
+        <script>
+            var canvas = document.getElementById('canvas');
+            var ctx = canvas.getContext('2d');
+            var btn = document.getElementById('btn');
+            ctx.fillStyle = 'red';
+            console.log(canvas.width);
+            var viteza = 30;
+            var timp = canvas.width / viteza;
+            var patratX = canvas.width - 10;
+            ctx.rect(canvas.width - 10, 0, 10, 10);
+           ctx.fill();
+            btn.addEventListener('click', (e)=>{
+                setInterval(function(){
+                    if(patratX > 0){
+                        ctx.beginPath();
+                        ctx.clearRect(patratX, 0, 10, 10);
+                        patratX--;
+                        ctx.rect(patratX, 0, 10, 10);
+                        ctx.fill();
+                        console.log(patratX);
+                    }else{
+                        ctx.beginPath();
+                        ctx.clearRect(0,0,10,10);
+                        patratX = canvas.width - 10;
+                        ctx.fillRect(patratX,0,10,10);
+                        clearInterval();
+                    }
+                }, timp)
+            })
+        </script>
+    </body>
+</html>

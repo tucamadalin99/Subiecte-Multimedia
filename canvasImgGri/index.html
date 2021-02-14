@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!-- 20. Scrieți o aplicatie HTML5 si o funcție javascript care primește ca parametru o imagine și o afișează în tonuri de
+gri (ponderile rgb vor fi 0,3, 0.6, 0.11) pe canvas-ul cu id-ul "desen" la coordonatele 0,0. Uitilizati functia la
+apasarea unui buton -->
+
+<html>
+    <body>
+        <img id='img' src="img.jpg" width="600" height="400">
+        <canvas id='canvas' width="600" height="400" style="width: 600px; height: 400px;"></canvas>
+    </br>
+            <button id='exec'>Greyscale</button>
+    </body>
+
+    <script>
+        let canvas = document.getElementById('canvas');
+        let ctx = canvas.getContext('2d');
+        let img = document.getElementById('img');
+        let btn = document.getElementById('exec');
+        btn.addEventListener('click', (e)=>{
+            convert(img);
+        })
+        function convert(img){
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            ctx.drawImage(img,0,0, canvas.width,canvas.height);
+            let pixels = ctx.getImageData(0,0,canvas.width,canvas.height);
+            console.log(pixels.data);
+            for(let i = 0; i < pixels.data.length; i+=4){
+                let medie = (pixels.data[i] + pixels.data[i + 1] + pixels.data[i + 2]) / 3;
+                pixels.data[i] = medie;
+                pixels.data[i + 1] = medie;
+                pixels.data[i + 2] = medie;
+            }
+            ctx.putImageData(pixels, 0,0)
+        }
+    </script>
+</html>

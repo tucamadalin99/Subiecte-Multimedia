@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <img id='img' src="./69307928_2371323352902772_7713192077370064896_n.jpg" width="600" height="400"/>
+        <canvas id="canvas" width="600" height="400" style="width: 600px; height: 400px; border: 1px solid black;"></canvas>
+    </body>
+    <script>
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var img = document.getElementById('img');
+           canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+        canvas.addEventListener('click', (e)=>{
+            console.log(canvas.width, canvas.height);
+            ctx.translate(0, canvas.height);
+            ctx.scale(1,-1);
+            ctx.drawImage(img, 0, 0,canvas.width, canvas.height);
+        })
+
+    </script>
+</html>

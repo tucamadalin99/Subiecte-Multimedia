@@ -1,0 +1,73 @@
+<html>
+
+<head>
+
+    <!--
+(3p) Adăugați în codul HTML al paginii un element de tip <canvas> și un element de tip <img> în care se va afișa fișierul „photo.jpg” din directorul „media”. 
+(3p) Scrieți codul care va afișa pe canvas imaginea în care au fost înlocuite coloanele pare cu o culoare la alegere.
+(3p) Desenați un chenar cu o grosime de 5px pe cele patru laturi ale canvas-ului.
+
+-->
+    <title>PB 2</title>
+</head>
+
+<body>
+
+    <canvas id="canvas" width="600" height="400" style="border: 1px solid black"></canvas>
+
+    <img src="toamna.jpg" alt="" id="image">
+
+
+</body>
+<script>
+    "use strict";
+
+    window.addEventListener("load", () => {
+        let canvas = document.getElementById("canvas");
+        let image = document.getElementById("image");
+        let context = canvas.getContext("2d");
+
+        canvas.width = image.naturalWidth;
+        canvas.height = image.naturalHeight;
+
+        context.drawImage(image, 0, 0);
+
+        canvas.addEventListener("mousedown", function (event) {
+            let x = event.clientX
+            let y = event.clientY
+
+            context.beginPath();
+            context.ellipse(x, y, 100, 100, 0, 0, Math.PI * 2);
+
+            let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            let dataArray = imageData.data;
+
+
+            for (let i = y - 100; i < y + 100; i++)
+                for (let j = x - 100; j < x + 100; j++) {
+                    let offset = (i * canvas.width + j) * 4;
+
+                    dataArray[offset] = dataArray[offset] / 2;
+                    dataArray[offset + 1] = dataArray[offset + 1] / 2;
+                    dataArray[offset + 2] = dataArray[offset + 1] / 2;
+
+                }
+
+
+            context.putImageData(imageData, 0, 0);
+            context.stroke()
+
+        })
+
+
+
+
+
+    })
+
+
+</script>
+
+</html>
+
+</html>

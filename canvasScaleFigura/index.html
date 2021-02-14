@@ -1,0 +1,23 @@
+<!-- 12. Scrieti aplicatia HTML5 si codul Javascript deseneaza o forma geometrica intr-un canvas caruia I s-au aplicat doua
+transformari(rotire si scalare cu 1.5 pe OY) in plan la click pe canvas. -->
+<!DOCTYPE html>
+<html>
+    <body>
+        <canvas id='canvas' width="600" height="400" style="border: 1px solid black">
+
+        </canvas>
+    </body>
+    <script>
+        let canvas = document.getElementById('canvas');
+        let ctx = canvas.getContext('2d');
+        canvas.addEventListener('click', (e)=>{
+            // ctx.rotate(1.5);
+            // ctx.scale(0,1.5);
+            ctx.rotate(1.5 * Math.PI/180);
+            ctx.scale(1,1.5);
+            ctx.rect(20,20,100,100);
+            ctx.fillStyle = "red";
+            ctx.fill();
+        })
+    </script>
+</html>

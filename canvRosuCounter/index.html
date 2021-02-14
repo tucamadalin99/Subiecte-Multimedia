@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500" style="border: 2px solid black;"></canvas>
+    <h3 id='val'>Numar pixeli rosii</h3>
+    <script>
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var img = new Image();
+        var counter1 = 0;
+        var counter2 = 0;
+        var counter3 = 0;
+        img.src = "./poza2.jpg";
+        img.onload = () => {
+            ctx.drawImage(img,0,0,canvas.width,canvas.height);
+        }
+
+        canvas.onclick = (e)=>{
+            var imgData = ctx.getImageData(0,0,canvas.width,canvas.height);
+            var pixels = imgData.data;
+            for(var i = 0; i < pixels.length; i+=4){
+                if(pixels[i] > 0 && pixels[i] < 85){
+                    counter1++;
+                }else if(pixels[i] > 86 && pixels[i] < 170)
+                {
+                    counter2++;
+                }else if(pixels[i] > 171 && pixels[i] < 255){
+                    counter3++;
+                }
+                //counterAll++;
+            }
+            document.getElementById('val').innerHTML += " " + counter1 + " " + counter2 + " " + counter3;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img id="img" src="./69307928_2371323352902772_7713192077370064896_n.jpg" width="500" height="500"/>
+    <canvas id="canvas" width="500" height="500" style="border: 1px solid black"></canvas>
+    <script>
+        var img = document.getElementById('img');
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var rect = canvas.getBoundingClientRect();
+        document.onclick = () =>{
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            var imgData = ctx.getImageData(0,0,canvas.width,canvas.height);
+            console.log(imgData);
+            var pixels = imgData.data;
+            for(let i = 0; i < pixels.length; i+=4){
+                var medie = (pixels[i] + pixels[i + 1] + pixels[i + 2])/3;
+                pixels[i] = medie;
+                pixels[i + 1] = medie;
+                pixels[i + 2] = medie;
+            }
+            ctx.putImageData(imgData,0,0);
+        }
+        canvas.onclick = (e)=>{
+            console.log(e.target);
+            let pos = {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            }
+            console.log(pos);
+             var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            var pixels = imgData.data;
+            for (let i = 0; i < pixels.length; i += 4) {
+                var medie = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
+               pixels[i] = 100;
+            }
+            ctx.putImageData(imgData);
+        }
+        
+ 
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id='canvas' width="500" height="500" style="border: 1px solid black"></canvas>
+    <button id='btn'>Incepe</button>
+    <script>
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        ctx.arc(25,25,25,0,Math.PI*2);
+        ctx.fillStyle="red";
+        ctx.fill();
+        var bilaX = 25;
+        var bilaY = 25;
+        var btn = document.getElementById('btn');
+        btn.addEventListener('click', (e)=>{
+            setInterval(function(){
+                if(canvas.width - 25 > bilaX){
+                               ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.beginPath();
+                    bilaX++;
+                    bilaY++;
+                    ctx.arc(bilaX, bilaY, 25, 0, Math.PI * 2);
+                    ctx.fill();
+                }   
+    
+            }, 10);
+        })
+    </script>
+</body>
+</html>

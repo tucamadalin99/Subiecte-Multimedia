@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Imagine - Grafic</title>
+</head>
+
+<body>
+    <form>
+        <input id="btngrafic" type="button" value="Grafic">
+        <input id="valori" type="text">
+    </form>
+    <button id='rec-btn'>Incepe</button>
+    <canvas id="canvas1" width="400" height="400"></canvas>
+
+    <script type="text/javascript">
+        var canvas = document.getElementById("canvas1");
+        var context = canvas.getContext("2d");
+        var recognition = new webkitSpeechRecognition();
+            var rezult;
+            var recunoastere = false;
+            var i = 0;
+            var valori = document.getElementById("valori").value.split(" ");
+
+            recognition.lang = 'ro';
+            recognition.continuous = true;
+            recognition.maxAlternatives = 1;
+            var recBtn = document.getElementById('rec-btn');
+
+            recBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (recunoastere) {
+                    recognition.stop();
+                    recunoastere = false;
+                    recBtn.innerHTML = "Incepe ascultarea";
+                }
+                else {
+                    recognition.start();
+                    recunoastere = true;
+                    recBtn.innerHTML = "Opreste ascultarea";
+                }
+            })
+
+            recognition.onresult = function (e) {
+                rezult = e.results[i][0].transcript.trim();
+                document.getElementById('valori').value = rezult
+                valori = rezult.split(" ");
+               deseneazagrafic();
+                
+            }
+
+        function deseneazagrafic() {
+            console.log(valori);
+            var H = canvas.height;
+            var w = canvas.width / valori.length;
+
+            context.fillStyle = "#DEDEDE";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+
+            context.fillStyle = "red";
+            context.strokeStyle = "black";
+            context.lineWidth = 2;
+
+            var f = H * 0.9 / Math.max.apply(Math, valori); //400*0.9/20;
+
+            console.log("latime dreptunghi cu spatiu:" + w);
+            console.log("factorul f:" + f);
+
+            for (var i = 0; i < valori.length; i++) {
+                console.log("inaltime dreptunghi " + i + " " + f * valori[i]);
+                console.log("latime dreptunghi " + i + " " + 0.8 * w);
+                context.beginPath();
+                context.rect(i * w + 0.1 * w, H - f * valori[i], 0.8 * w, f * valori[i]);
+                context.fill();
+                context.stroke();
+            }
+        }
+
+        //document.getElementById("btngrafic").onclick = deseneazagrafic;
+
+
+    </script>
+</body>
+
+</html>

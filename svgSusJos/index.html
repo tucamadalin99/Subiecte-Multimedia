@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <svg id="svg" width="600" height="400" style="border: 1px solid blue">
+            <ellipse id="elipsa" cx="50" cy="25" rx="30" ry="25" style="stroke:red; fill:green"></ellipse>
+    </svg>
+    <script>
+        let svg = document.getElementById('svg');
+        let elipsa = document.getElementById('elipsa');
+        elipsa.setAttribute('cx', svg.getBoundingClientRect().width/2)
+        let viteza = 30;
+        let elipsaY = 25;
+        const timp = svg.getBoundingClientRect().width / viteza;
+        svg.addEventListener('click', function(e) {
+            setInterval(function(){
+                if(elipsaY < svg.getBoundingClientRect().height - 25){
+                    elipsaY++;
+                    elipsa.setAttribute('cy', elipsaY);
+                }else{
+                    elipsa.setAttribute('cy', 25);
+                }
+            }, timp)
+        })
+        
+    </script>
+</body>
+</html>

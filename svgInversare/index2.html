@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <svg id="svg" width="1000" height="400" style="border: 1px solid black">
+        <ellipse cx="200" cy="80" rx="100" ry="50" style="fill:yellow;stroke:purple;stroke-width:2" />
+        <circle cx="350" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
+        <line x1="0" y1="0" x2="100" y2="100" style="stroke:rgb(255,0,0);stroke-width:2" />
+        <rect width="100" height="100" style="fill:rgb(0,0,255);stroke-width:10;stroke:rgb(0,0,0)" />
+    </svg>
+
+    <script>
+        let svg = document.getElementById("svg");
+        let svgArray = document.getElementById("svg").children;
+        let rect = svg.getBoundingClientRect();
+        let w = rect.width;
+        let h = rect.height;
+        for (let i = 0; i < svgArray.length; i++) {
+            let svgObject = svgArray[i];
+            console.log('SVG obj:', svgObject);
+            let objectRect = svgObject.getBoundingClientRect();
+            svgObject.setAttribute('x', w / 2);
+            svgObject.setAttribute('y', 50);
+            svg.addEventListener('click', () => {
+                let x1 = parseFloat(svgObject.getAttribute('x'));
+                let y1 = parseFloat(svgObject.getAttribute('y'));
+                console.log(x1, y1);
+                let calc = (h / 2 - (y1 + objectRect.height)) * 2 + objectRect.height;
+                console.log(calc);
+                svgObject.style.transform = `translate(0,${calc}px)`;
+            })
+        }
+
+    </script>
+
+</body>
+
+</html>

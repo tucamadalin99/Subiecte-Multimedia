@@ -1,0 +1,45 @@
+<!-- 
+Scrieți aplicatia HTML5 si codul Javascript care deplasează orizontal spre dreapta o elipsa intr-un obiect svg. Viteza
+de deplasare trebuie să fie de 50 pixeli pe secundă. Atunci când elipsa depășește marginea din dreapta a canvas-ului
+trebuie repoziționat în partea stanga a svg-ului. -->
+
+<!DOCTYPE html>
+<html>
+    <body>
+        <svg id="svg" width="600" height="400" style="border: 1px solid black;">
+            <ellipse id="elipsa" cx="50" cy="50" rx="50" ry="40" style="stroke: black;"></ellipse>
+        </svg>
+        <script>
+            let svg = document.getElementById('svg');
+            let elipsa = document.getElementById('elipsa');
+            let sablon = svg.getBoundingClientRect();
+            console.log(sablon.width);
+            let viteza = 50;
+            let calcul = sablon.width/viteza;
+            elipsa.setAttribute('cx',50);
+            elipsa.setAttribute('rx', 50);
+            let elipsaX = elipsa.getAttribute('cx');
+            let raza1 = elipsa.getAttribute('rx');
+            console.log(elipsaX);
+            let limita = parseFloat(elipsaX) + parseFloat(raza1);
+            console.log(limita);
+            function moveElipsa(){
+                if(limita < parseFloat(sablon.width)){
+                    elipsaX++;
+                    console.log(elipsaX);
+                    limita++;
+                    elipsa.setAttribute('cx', elipsaX);
+                }else{
+                    elipsa.setAttribute('cx', 50);
+                    elipsaX = 50;
+                    return;
+                }
+            }
+            svg.addEventListener('click', (e)=>{
+                limita = 100;
+               setInterval(moveElipsa, calcul);
+            })
+        
+        </script>
+    </body>
+</html>

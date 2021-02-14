@@ -1,0 +1,30 @@
+<!-- Scrieti aplicatia HTML5 si codul Javascript care schimba proprietati vizuale ale obiectelor peste care se misca mouse-ul
+intr-un obiect SVG -->
+<!DOCTYPE html>
+<html>
+    <body>
+        <svg id='svg' width="600" height="400" style="border: 1px solid black">
+            <ellipse id="elipsa" cx="80" cy="80" rx="50" ry="40" fill="red"></ellipse>
+            <rect width="150" height="100" style="fill: teal" x="200" y="20"></rect>
+            <line x1="400" y1="20" x2="500" y2="100" style="stroke:rgb(255,0,0);stroke-width:2" />
+        </svg>
+        <script>
+            let svg = document.getElementById('svg');
+            let svgArray = svg.children;
+            console.log(svgArray);
+            for(let i = 0; i < svgArray.length; i++){
+                let objRect = svgArray[i].getBoundingClientRect();
+                svgArray[i].addEventListener("mouseover", (e)=>{
+                    if(i == 0)
+                    svgArray[0].style = "fill: black";
+                    else if(i == 1){
+                        svgArray[1].style = "fill: green; height: 250px"
+                    }
+                    else{
+                         svgArray[2].style = "stroke: blue;"
+                    }
+                })
+            }
+        </script>
+    </body>
+</html>
